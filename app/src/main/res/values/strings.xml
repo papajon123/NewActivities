@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NewActivities</string>
+    <string name="action_settings">Settings</string>
+    <string name="content_main_button_read">Read</string>
+    <string name="title_activity_setter">SetterActivity</string>
+    <string name="content_setter_edit_text_login">Login</string>
+    <string name="content_setter_edit_text_pass">Password</string>
+    <string name="content_setter_button_save">Save</string>
+</resources>
