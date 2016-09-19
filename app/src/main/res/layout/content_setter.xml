@@ -38,6 +38,7 @@
         <DatePicker
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/content_setter_date_picker_born"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
             android:layout_gravity="center"/>

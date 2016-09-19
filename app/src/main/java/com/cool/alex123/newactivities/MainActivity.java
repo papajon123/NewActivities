@@ -12,8 +12,11 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
-    public static final int REQUEST_SETTER=0X123;
+    public static final int REQUEST_SETTER=123;
     private Button buttonRead;
     private EditText editTextCredentials;
 
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         initToolBar();
         initFloatingActionButton();
         initButton();
-        initEditText();
+        editTextCredentials = (EditText) findViewById(R.id.content_main_edit_text_credentials);
     }
 
     private void initFloatingActionButton() {
@@ -47,30 +50,43 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-
-
     private void initButton(){
         buttonRead = (Button) findViewById(R.id.content_main_button_read);
         buttonRead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,SetterActivity.class);
+                /*startActivityForResult предназнгачается для запуска нового активити
+                с ожиданием от него результата, в данном случае ожидание логин пароль и дату рождения
+                аргументы: intent - объект содержащий активити которое хотим запустить
+                REQUEST_SETTER - заранее объявленная в классе MainActivity константа
+                характерезующая индентификатор запуска активити.
+                Предназначается для того, чтобы в дальнейшем когда активити будет давать нам результат
+                мы смогли индентифицировать от какого запроса пришёл к нам результат
+                 */
                 startActivityForResult(intent,REQUEST_SETTER);
             }
         });
     }
-
-    private void initEditText(){
-        editTextCredentials = (EditText) findViewById(R.id.content_setter_edit_text_login);
-    }
-
+    /*
+    onActivityResult - метод который принимает ответы от всех активити для которых ожидается результат.
+    Аргументы:
+    requestCode - принимает код запроса активити от которого пришёл ответ
+    resultCode -  принимает код результата (RESULT_OK - если пользователь удачно завершил активити,
+    resultCancelled - если пользователь отклонил активити нажав кнопку назад )
+        */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
             switch (requestCode){
                 case REQUEST_SETTER:
-                    editTextCredentials.setText(data.getStringExtra());
+                    String login = data.getStringExtra(SetterActivity.LOGIN);
+                    String pass = data.getStringExtra(SetterActivity.PASS);
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy");
+                    Date date = (Date) data.getSerializableExtra(SetterActivity.BORN);
+                    editTextCredentials.setText(login+" "+pass+" "+simpleDateFormat.format(date));
+                    break;
             }
         }
     }

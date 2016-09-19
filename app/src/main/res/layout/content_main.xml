@@ -21,6 +21,7 @@
         android:layout_weight="1"/>
     <EditText
         android:layout_width="0dp"
+        android:id="@+id/content_main_edit_text_credentials"
         android:layout_height="wrap_content"
         android:layout_weight="2"/>
 </LinearLayout>
